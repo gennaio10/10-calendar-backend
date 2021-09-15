@@ -12,7 +12,7 @@ const crearUsuario = async (req, res = response) => {
     if (usuario) {
       res.status(400).json({
         ok: false,
-        msg: "Un usario ya existe con ese email",
+        msg: "Usuario ya existe",
       });
     }
     // Si el usuario no existe
@@ -93,6 +93,8 @@ const revalidarToken = async (req, res = response) => {
 
   res.status(200).json({
     ok: true,
+    uid: uid,
+    name: name,
     token: token,
   });
 };
