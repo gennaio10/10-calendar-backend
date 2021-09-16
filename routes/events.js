@@ -21,6 +21,7 @@ const {
   crearEvento,
   actualizarEvento,
   borrarEvento,
+  getEventosUser,
 } = require("../controllers/events");
 
 const router = Router.apply();
@@ -44,6 +45,9 @@ router.post(
 
 // GET = select (url param)
 router.get("/", getEventos);
+
+// GET = select (url param)
+router.get("/user", getEventosUser);
 
 // PUT = update (json en el body)
 router.put(

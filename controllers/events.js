@@ -25,7 +25,7 @@ const crearEvento = async (req, res = response) => {
   }
 };
 
-const getEventos = async (req, res = response) => {
+const getEventosUser = async (req, res = response) => {
   try {
     // Evento.find(); trae todos los registros del modelo
     // .populate('user password'); trae el detalle del objeto inmerso (como un join y trae los datos de la otra tabla)
@@ -34,6 +34,27 @@ const getEventos = async (req, res = response) => {
       "user",
       "name"
     );
+
+    res.status(200).json({
+      ok: true,
+      msg: "Obtener eventos",
+      eventosUsuario,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      ok: false,
+      msg: "Comunicate con la mesa de ayuda",
+    });
+  }
+};
+
+const getEventos = async (req, res = response) => {
+  try {
+    // Evento.find(); trae todos los registros del modelo
+    // .populate('user password'); trae el detalle del objeto inmerso (como un join y trae los datos de la otra tabla)
+    // const eventos = await Evento.find().populate('user', 'name');
+    const eventosUsuario = await Evento.find().populate("user", "name");
 
     res.status(200).json({
       ok: true,
@@ -64,7 +85,7 @@ const actualizarEvento = async (req, res = response) => {
       });
     }
 
-    // Se permitira borrar solo si el evento es del usuario que esta logeado
+    // Se permitira actualizar solo si el evento es del usuario que esta logeado
     // lo sabremos por el token del usuario vs el usuario del evento
     if (evento.user.toString() !== uid) {
       return res.status(401).json({
@@ -140,4 +161,10 @@ const borrarEvento = async (req, res = response) => {
   }
 };
 
-module.exports = { getEventos, crearEvento, actualizarEvento, borrarEvento };
+module.exports = {
+  getEventos,
+  crearEvento,
+  actualizarEvento,
+  borrarEvento,
+  getEventosUser,
+};
