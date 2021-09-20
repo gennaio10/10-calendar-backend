@@ -5,7 +5,7 @@ const validarCampos = (req, res = response, next) => {
   //valida errores definidores en el check
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({
+    return res.status(412).json({
       ok: false,
       msg: errors.mapped(),
     });

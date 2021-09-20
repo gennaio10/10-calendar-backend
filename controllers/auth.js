@@ -88,15 +88,23 @@ const loginUsuario = async (req, res = response) => {
 const revalidarToken = async (req, res = response) => {
   const { uid, name } = req;
 
-  // Generar Json Wen Token ( JWT )
-  const token = await generarJWT(uid, name);
+  try {
+    // Generar Json Wen Token ( JWT )
+    const token = await generarJWT(uid, name);
 
-  res.status(200).json({
-    ok: true,
-    uid: uid,
-    name: name,
-    token: token,
-  });
+    res.status(200).json({
+      ok: true,
+      uid: uid,
+      name: name,
+      token: token,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      ok: false,
+      msg: "Comunicate con la mesa de ayuda",
+    });
+  }
 };
 
 module.exports = { crearUsuario, loginUsuario, revalidarToken };
